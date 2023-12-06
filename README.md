@@ -15,4 +15,3 @@ This is a simple web application that allows users to book flights or etc.
 │      └─ templates/
 │            └─ index.html
 └── config.py
-'''
