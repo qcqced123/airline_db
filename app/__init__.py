@@ -32,7 +32,7 @@ def create_app(test_config=None):
     else:
         app.config.update(test_config)
 
-    # ORM
+    # make connection with MySQL DB
     app.json_encoder = CustomJSONEncoder
     engine = create_engine(app.config['DB_URL'], echo=True)
     metadata_obj = MetaData()
