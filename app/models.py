@@ -2,7 +2,8 @@ from app import db
 
 
 class User(db.Model):
-    """ User Model for storing user related details
+    """
+    User Model for storing user related details
     Notes:
         id: User ID for login (아이디)
         username: User Name for display (이름)

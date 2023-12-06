@@ -48,7 +48,7 @@ def create_app(test_config=None):
     # db.init_app(app)
     # migrate.init_app(app, db)
 
-    # app.register_blueprint(main_views.bp)
+    app.register_blueprint(main_views.bp)
     # app.register_blueprint(auth_views.bp)
 
     return app
