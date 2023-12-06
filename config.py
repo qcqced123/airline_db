@@ -1,3 +1,6 @@
+import os, sys
+
+
 db = {
     'user': 'root',
     'password': 'epqptjf!',
@@ -6,3 +9,5 @@ db = {
     'database': 'AirlineReservationWebDB'
 }
 DB_URL = f"mysql+mysqlconnector://{db['user']}:{db['password']}@{db['host']}:{db['port']}/{db['database']}?charset=utf8mb4"
+DB_TRACK_MODIFICATIONS = False
+
