@@ -1,7 +1,7 @@
 from flask import Blueprint, url_for, render_template, flash, request, current_app, jsonify
 from werkzeug.security import generate_password_hash
 from werkzeug.utils import redirect
-# from app import db
+from app import db
 from app.forms import UserCreateForm
 from app.models import User
 
