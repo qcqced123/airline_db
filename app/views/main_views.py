@@ -1,6 +1,4 @@
 from flask import Blueprint, url_for, render_template, flash, request, current_app, jsonify
-from werkzeug.utils import redirect
-from sqlalchemy import create_engine, text
 
 bp = Blueprint('main', __name__, url_prefix='/')
 
@@ -15,3 +13,9 @@ def hello():
 def index():
     """ Concrete view for rendering main page """
     return render_template('base.html')
+
+
+@bp.route('/menu')
+def personal():
+    """ Concrete view for personal information page """
+    return render_template('./user/menu.html')

@@ -1,7 +1,6 @@
 from flask import Blueprint, url_for, render_template, flash
 from flask import request, current_app, jsonify, session
-from sqlalchemy import Table
-from sqlalchemy import insert, delete, select
+from sqlalchemy import Table, insert, delete, select, and_
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import redirect
@@ -52,7 +51,7 @@ def login():
             """ login success case """
             session.clear()
             session['user_id'] = name
-            return redirect(url_for('main.index'))
+            return redirect(url_for('main.personal'))
 
         flash(error)
     return render_template('auth/login.html', form=form)

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>항공사 서비스 페이지</title>
+    <link rel="stylesheet" href="../../static/style.css"> <!-- CSS 파일을 참조하는 부분 -->
+</head>
+<body>
+    <div class="navbar">
+        <a href="#">개인 정보 확인/수정</a>
+        <a href="{{ url_for('user.search') }}">항공편 조회</a>
+        <a href="#flightPurchase">항공편 구매</a>
+        <a href="#dutyFreePurchase">면세품 구매</a>
+    </div>
+</body>
+</html>

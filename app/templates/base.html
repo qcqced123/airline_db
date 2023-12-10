@@ -5,10 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
-    <!-- pybo CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>DB Airline Application</title>
+    <link rel="stylesheet" href="../static/style.css"> <!-- CSS 파일을 참조하는 부분 -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+
 </head>
 <body>
 {% include "navbar.html" %}

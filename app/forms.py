@@ -1,6 +1,9 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, PasswordField, EmailField
 from wtforms.validators import DataRequired, Length, EqualTo, Email
+from wtforms import DateField, SubmitField
+from wtforms.validators import DataRequired
+from datetime import datetime
 
 
 class UserCreateForm(FlaskForm):
@@ -30,3 +33,11 @@ class UserLoginForm(FlaskForm):
     """
     username = StringField('사용자이름', validators=[DataRequired(), Length(min=1, max=30)])
     password = PasswordField('비밀번호', validators=[DataRequired()])
+
+
+class DateRangeForm(FlaskForm):
+    """ Form for searching flights by date range """
+    start_date = DateField('시작 날짜', format='%Y-%m-%d', validators=[DataRequired()])
+    end_date = DateField('종료 날짜', format='%Y-%m-%d', validators=[DataRequired()])
+    submit = SubmitField('검색')
+
