@@ -7,4 +7,4 @@ bp = Blueprint('main', __name__, url_prefix='/')
 @bp.route('/')
 def hello():
     """ Routing Method(Concrete View) """
-    return 'Hello, World'
+    return 'Hello, World!!'

@@ -1,7 +1,7 @@
-from app import db
+from app import db, engine, metadata_obj, database
 
 
-class User(db.Model):
+class AddUser(db.Model):
     """
     User Model for storing user related details
     Notes:
@@ -9,7 +9,7 @@ class User(db.Model):
         username: User Name for display (이름)
         password: User Password for login (비밀번호)
     """
-    user_id = db.Column(db.String(100), primary_key=True)
-    user_name = db.Column(db.String(150), unique=True, nullable=False)
-    password = db.Column(db.String(200), nullable=False)
+    user_id = database.Column(database.String(100), primary_key=True)
+    user_name = database.Column(database.String(150), unique=True, nullable=False)
+    password = database.Column(database.String(200), nullable=False)
 

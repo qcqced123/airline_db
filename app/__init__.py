@@ -2,18 +2,19 @@ import config
 
 from flask import Flask, jsonify, request, current_app
 from flask_migrate import Migrate
+from flask_wtf.csrf import CSRFProtect
 from flask_sqlalchemy import SQLAlchemy
 from json import JSONEncoder
 
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import Table, MetaData
+from sqlalchemy import MetaData
 from sqlalchemy import insert, delete
-from .views import main_views
 
 
 db = SQLAlchemy()
 migrate = Migrate()
+engine, metadata_obj, database = None, None, None
 
 
 class CustomJSONEncoder(JSONEncoder):
@@ -25,7 +26,9 @@ class CustomJSONEncoder(JSONEncoder):
 
 
 def create_app(test_config=None):
+    from .views import main_views, auth_views, price_views
     """ Flask application factory with blueprint(concrete views) """
+    global engine, metadata_obj, database
     app = Flask(__name__)
     if test_config is None:
         app.config.from_object(config)
@@ -37,18 +40,21 @@ def create_app(test_config=None):
     engine = create_engine(app.config['DB_URL'], echo=True)
     metadata_obj = MetaData()
     sessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-    db = sessionLocal()
-    UserAccount = Table("UserAccount", metadata_obj, autoload_with=engine)
-    test = insert(UserAccount).values(UserId='U0071', UserName='LEE', UserPassword='1234')
-    db.execute(test)
-    db.commit()
-    db.close()
+    database = sessionLocal()
+    from .models import AddUser
+
+    # make table example
+    # UserAccount = Table("UserAccount", metadata_obj, autoload_with=engine)
+    # test = insert(UserAccount).values(UserId='U0071', UserName='LEE', UserPassword='1234')  # insert
+    # database.execute(test)
+    # database.commit()
+    database.close()
 
     # app.database = database
     # db.init_app(app)
     # migrate.init_app(app, db)
 
     app.register_blueprint(main_views.bp)
-    # app.register_blueprint(auth_views.bp)
-
+    app.register_blueprint(auth_views.bp)
+    app.register_blueprint(price_views.bp)
     return app
