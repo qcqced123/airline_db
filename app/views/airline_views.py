@@ -21,11 +21,7 @@ def search():
 
         with engine.connect() as connection:
             result = connection.execute(result)
-            flights = result.fetchall()  # 모든 결과를 가져옴
-
-        # flights 변수에는 결과가 리스트 형태로 저장됩니다.
-        # 이를 템플릿에 전달하여 결과를 렌더링할 수 있습니다.
+            flights = result.fetchall()
         return render_template('user/search_result.html', flights=flights)
-        # return redirect(url_for('main.personal'))
     return render_template('user/search_airline.html', form=form)
 

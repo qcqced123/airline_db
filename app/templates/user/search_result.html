@@ -17,6 +17,22 @@
         th {
             background-color: #f2f2f2;
         }
+        .view-button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        .disabled-button {
+            background-color: #cccccc; /* Gray */
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -29,6 +45,7 @@
                 <th>일일 항공편 ID</th>
                 <th>비행 번호</th>
                 <th>항공기 ID</th>
+                <th>조회</th>
             </tr>
         </thead>
         <tbody>
@@ -39,6 +56,13 @@
                 <td>{{ flight.DailyFlightId }}</td>
                 <td>{{ flight.FlightNumber }}</td>
                 <td>{{ flight.AircraftId }}</td>
+                <td>
+                    {% if flight.State == 'Cancelled' or flight.State == 'Delayed' %}
+                        <button class="view-button disabled-button" disabled>조회</button>
+                    {% else %}
+                        <a href="#" class="view-button">조회</a>
+                    {% endif %}
+                </td>
             </tr>
             {% endfor %}
         </tbody>
