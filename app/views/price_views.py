@@ -22,7 +22,6 @@ def get_total_duty_free_price(UserId: str):
     total_price = 0
     for duty_free_booking in duty_free_bookings:
         total_price += duty_free_booking.amount
-    print(total_price)
     return jsonify({"total_price": total_price})
 
 

@@ -18,3 +18,15 @@ class UserCreateForm(FlaskForm):
     )
     password2 = PasswordField('비밀번호확인', validators=[DataRequired()])
 
+
+class UserLoginForm(FlaskForm):
+    """
+    Form for logging in user
+    Notes:
+        username: User ID for login (아이디)
+        password: User Password for login (비밀번호)
+    References:
+        https://wikidocs.net/81058
+    """
+    username = StringField('사용자이름', validators=[DataRequired(), Length(min=1, max=30)])
+    password = PasswordField('비밀번호', validators=[DataRequired()])

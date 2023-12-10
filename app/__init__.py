@@ -41,20 +41,11 @@ def create_app(test_config=None):
     metadata_obj = MetaData()
     sessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     database = sessionLocal()
-    from .models import AddUser
 
-    # make table example
-    # UserAccount = Table("UserAccount", metadata_obj, autoload_with=engine)
-    # test = insert(UserAccount).values(UserId='U0071', UserName='LEE', UserPassword='1234')  # insert
-    # database.execute(test)
-    # database.commit()
-    database.close()
-
-    # app.database = database
-    # db.init_app(app)
-    # migrate.init_app(app, db)
-
+    # Apply Concrete Views
     app.register_blueprint(main_views.bp)
     app.register_blueprint(auth_views.bp)
     app.register_blueprint(price_views.bp)
+    database.close()
+
     return app
