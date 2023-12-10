@@ -24,7 +24,7 @@ class UserCreateForm(FlaskForm):
 
 class UserLoginForm(FlaskForm):
     """
-    Form for logging in user
+    Form for logging in user, for auth_views.py
     Notes:
         username: User ID for login (아이디)
         password: User Password for login (비밀번호)
@@ -36,8 +36,14 @@ class UserLoginForm(FlaskForm):
 
 
 class DateRangeForm(FlaskForm):
-    """ Form for searching flights by date range """
+    """
+    Form for searching flights by date range, for airline_views.py
+    Notes:
+        start_date: start date for searching flights
+        end_date: end date for searching flights
+    """
     start_date = DateField('시작 날짜', format='%Y-%m-%d', validators=[DataRequired()])
     end_date = DateField('종료 날짜', format='%Y-%m-%d', validators=[DataRequired()])
     submit = SubmitField('검색')
+
 

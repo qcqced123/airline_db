@@ -56,11 +56,20 @@
                 <td>{{ flight.DailyFlightId }}</td>
                 <td>{{ flight.FlightNumber }}</td>
                 <td>{{ flight.AircraftId }}</td>
+
                 <td>
                     {% if flight.State == 'Cancelled' or flight.State == 'Delayed' %}
                         <button class="view-button disabled-button" disabled>조회</button>
                     {% else %}
-                        <a href="#" class="view-button">조회</a>
+                        <!-- 각 행의 데이터를 함께 전송하는 폼 -->
+                        <form action="{{ url_for('purchase.reservation') }}" method="post">
+                            <input type="hidden" name="date" value="{{ flight.Date }}">
+                            <input type="hidden" name="state" value="{{ flight.State }}">
+                            <input type="hidden" name="dailyFlightId" value="{{ flight.DailyFlightId }}">
+                            <input type="hidden" name="flightNumber" value="{{ flight.FlightNumber }}">
+                            <input type="hidden" name="aircraftId" value="{{ flight.AircraftId }}">
+                            <button type="submit" class="view-button">조회</button>
+                        </form>
                     {% endif %}
                 </td>
             </tr>

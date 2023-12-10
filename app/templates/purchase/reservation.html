@@ -1,0 +1,95 @@
+<!-- templates/flight_detail_page.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>항공편 세부 정보</title>
+    <style>
+        .details-container {
+            width: 60%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .detail-item {
+            margin-bottom: 10px;
+        }
+        .detail-item label {
+            font-weight: bold;
+        }
+        .button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 5px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="details-container">
+        <h2>항공편 세부 정보</h2>
+        <div class="detail-item">
+            <label>날짜:</label>
+            <span>{{ userId }}</span>
+        </div>
+        <div class="detail-item">
+            <label>날짜:</label>
+            <span>{{ date }}</span>
+        </div>
+        <div class="detail-item">
+            <label>상태:</label>
+            <span>{{ state }}</span>
+        </div>
+        <div class="detail-item">
+            <label>일일 항공편 ID:</label>
+            <span>{{ dailyFlightId }}</span>
+        </div>
+        <div class="detail-item">
+            <label>비행 번호:</label>
+            <span>{{ flightNumber }}</span>
+        </div>
+        <div class="detail-item">
+            <label>항공기 ID:</label>
+            <span>{{ aircraftId }}</span>
+        </div>
+    </div>
+    <div class="details-container">
+        <h2>{{userName}} 고객님의 좌석 등급별 가격 정보</h2>
+        <h4>하기 결과는 고객님의 고객 등급 및 할인 정보를 모두 반영한 결과입니다</h4>
+
+        <div class="detail-item">
+            <label>이코노미 클래스 가격:</label>
+            <span>{{ economy_price }} 달러</span>
+        </div>
+        <div class="detail-item">
+            <label>비즈니스 클래스 가격:</label>
+            <span>{{ business_price }} 달러</span>
+        </div>
+    </div>
+    <div class="details-container">
+        <h2> 남은 좌석수 확인 및 예약 </h2>
+        <div class="detail-item">
+            <label> 이코노미 남은 자리: </label>
+            <span>{{ num_economy }}</span>
+            {% if num_economy > 0 %}
+                <a href="#" class="button">예약하기</a>
+            {% endif %}
+        </div>
+        <div class="detail-item">
+            <label> 비즈니스 남은 자리: </label>
+            <span>{{ num_business }}</span>
+            {% if num_business > 0 %}
+                <a href="#" class="button">예약하기</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

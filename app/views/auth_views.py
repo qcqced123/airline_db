@@ -39,9 +39,10 @@ def login():
     if request.method == 'POST' and form.validate_on_submit():
         error = None
         userAccount = Table("UserAccount", metadata_obj, autoload_with=engine)
+        userid = select(userAccount.c.UserId).where(userAccount.c.UserName == form.username.data)
         username = select(userAccount.c.UserName).where(userAccount.c.UserName == form.username.data)
         user_password = select(userAccount.c.UserPassword).where(userAccount.c.UserName == form.username.data)
-        name, password = database.execute(username).scalar(), database.execute(user_password).scalar()
+        uid, name, password = database.execute(userid).scalar(), database.execute(username).scalar(), database.execute(user_password).scalar()
         if name is None:
             error = "존재하지 않는 사용자입니다."
         elif not password == form.password.data:
@@ -50,7 +51,8 @@ def login():
         if error is None:
             """ login success case """
             session.clear()
-            session['user_id'] = name
+            session['user_id'] = uid
+            session['user_name'] = name
             return redirect(url_for('main.personal'))
 
         flash(error)
