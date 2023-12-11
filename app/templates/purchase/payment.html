@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .details-container {
+            width: 60%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .detail-item {
+            margin-bottom: 10px;
+        }
+        .detail-item label {
+            font-weight: bold;
+        }
+        .button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 5px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .view-button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="details-container">
+        <h2>마일리지 결제 정보</h2>
+            <div class="detail-item">
+                <label>{{ userName }} 고객님 잔여 마일리지:</label>
+                <span>{{ user_milage }}</span>
+            </div>
+            <div class="detail-item">
+                <label> 선택하신 항공편의 {{ seat }} 클래스 마일리지 결제 가격:</label>
+                <span>{{ payment_milage }} 포인트</span>
+                {% if user_milage > payment_milage %}
+                    <form action="{{ url_for('purchase.convenience_info') }}" method="post">
+                        <input type="hidden" name="seat" value="Economy">
+                        <input type="hidden" name="userId" value="{{ userId }}">
+                        <input type="hidden" name="userName" value="{{ userName }}">
+                        <input type="hidden" name="dailyFlightId" value="{{ dailyFlightId }}">
+                        <input type="hidden" name="payment_milage" value="{{ payment_milage }}">
+                        <input type="hidden" name="payment" value="Milage">
+                        <button type="submit" class="view-button">마일리지 결제</button>
+                    </form>
+                {% else %}
+                    <button class="view-button disabled-button" disabled>마일리지 결제</button>
+                {% endif %}
+            </div>
+    </div>
+    <div class="details-container">
+        <h2>현금 결제 정보</h2>
+            <div class="detail-item">
+                <label> 선택하신 항공편의 {{ seat }} 클래스 현금 결제 가격:</label>
+                <span>{{ payment_cash }} 달러</span>
+            </div>
+            <div class="detail-item">
+                <label> 캐시 결제 시, 예상 적립 마일리지:</label>
+                <span>{{ earn_milage }} 포인트</span>
+                <form action="{{ url_for('purchase.convenience_info') }}" method="post">
+                    <input type="hidden" name="seat" value="Economy">
+                    <input type="hidden" name="userId" value="{{ userId }}">
+                    <input type="hidden" name="userName" value="{{ userName }}">
+                    <input type="hidden" name="dailyFlightId" value="{{ dailyFlightId }}">
+                    <input type="hidden" name="earn_milage" value="{{ earn_milage }}">
+                    <input type="hidden" name="payment" value="Cash">
+                    <button type="submit" class="view-button">캐시 결제</button>
+                </form>
+            </div>
+    </div>
+
+</body>
+</html>

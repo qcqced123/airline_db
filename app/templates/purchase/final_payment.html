@@ -1,0 +1,125 @@
+<!-- templates/flight_results.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>검색 결과</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .view-button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        .disabled-button {
+            background-color: #cccccc; /* Gray */
+            cursor: not-allowed;
+        }
+                .details-container {
+            width: 60%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .detail-item {
+            margin-bottom: 10px;
+        }
+        .detail-item label {
+            font-weight: bold;
+        }
+        .button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 5px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .view-button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="details-container">
+        <h1>결제 금액 확인 및 결제</h1>
+        <p>고객님, 예약하신 항공편 {{dailyFlightId}} 결제 건의 면세점 결제 예정 금액 정보입니다.
+            결제 정보가 맞다면 확인을, 아니라면 취소 버튼을 눌러주세요. 취소를 누를 경우, 예약이 취소되니 신중하게 선택해주세요.
+        </p>
+        <div class="detail-item">
+            <table>
+            <thead>
+                <tr>
+                    <th>항목</th>
+                    <th>주문 내용</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>상품 번호</td>
+                    <td>{{ itemId }}</td>
+                </tr>
+                <tr>
+                    <td>상품 이름</td>
+                    <td>{{ itemName }}</td>
+                </tr>
+                <tr>
+                    <td>선택 수량</td>
+                    <td>{{ quantity }}</td>
+                </tr>
+                <tr>
+                    <td>총 결제 금액</td>
+                    <td>{{ totalPrice }}</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <form action="{{url_for('purchase.record')}}" method="post">
+                <input type="hidden" name="itemId" value="{{ itemId }}">
+                <input type="hidden" name="itemName" value="{{ itemName }}">
+                <input type="hidden" name="quantity" value="{{ quantity }}">
+                <input type="hidden" name="totalPrice" value="{{ totalPrice }}">
+                <input type="hidden" name="userId" value="{{ userId }}">
+                <input type="hidden" name="dailyFlightId" value="{{ dailyFlightId }}">
+                <button type="submit" class="view-button">결제</button>
+        </form>
+        <form action="{{url_for('cancel.cancel')}}" method="post">
+            <button type="submit" class="view-button">취소</button>
+        </form>
+
+    </div>
+</body>
+</html>

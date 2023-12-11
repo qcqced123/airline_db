@@ -47,3 +47,24 @@ class DateRangeForm(FlaskForm):
     submit = SubmitField('검색')
 
 
+class SpecialInfoFrom(FlaskForm):
+    """
+    Form for shopping in special information, for purchase_views.py
+    Notes:
+        start_date: start date for searching flights
+        end_date: end date for searching flights
+    """
+    specialInfoId = StringField('특이사항 번호', validators=[DataRequired()])
+
+
+class DutyFreeFrom(FlaskForm):
+    """
+    Form for shopping in duty free shop, for purchase_views.py
+    Notes:
+        start_date: start date for searching flights
+        end_date: end date for searching flights
+    """
+    itemId = StringField('상품번호', validators=[DataRequired()])
+    quantity = StringField('수량', validators=[DataRequired()])
+    submit = SubmitField('구매하기')
+

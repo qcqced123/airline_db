@@ -26,7 +26,7 @@ class CustomJSONEncoder(JSONEncoder):
 
 
 def create_app(test_config=None):
-    from .views import main_views, auth_views, purchase_views, airline_views
+    from .views import main_views, auth_views, purchase_views, airline_views, cancel_views
     """ Flask application factory with blueprint(concrete views) """
     global engine, metadata_obj, database
     app = Flask(__name__)
@@ -47,7 +47,7 @@ def create_app(test_config=None):
     app.register_blueprint(auth_views.bp)
     app.register_blueprint(purchase_views.bp)
     app.register_blueprint(airline_views.bp)
-
+    app.register_blueprint(cancel_views.bp)
     database.close()
 
     return app

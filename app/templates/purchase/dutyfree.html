@@ -1,0 +1,121 @@
+<!-- templates/flight_results.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>검색 결과</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .view-button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        .disabled-button {
+            background-color: #cccccc; /* Gray */
+            cursor: not-allowed;
+        }
+                .details-container {
+            width: 60%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .detail-item {
+            margin-bottom: 10px;
+        }
+        .detail-item label {
+            font-weight: bold;
+        }
+        .button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 5px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .view-button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="details-container">
+        <h1>면세점 아이템 목록</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>아이템 번호</th>
+                    <th>아이템 이름</th>
+                    <th>가격</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in itemList %}
+                <tr>
+                    <td>{{ item.ItemId }}</td>
+                    <td>{{ item.ItemName }}</td>
+                    <td>{{ item.Price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="details-container">
+        <h1>상품 선택</h1>
+        <div class="detail-item">
+            <form action="{{url_for('purchase.total')}}" method="post">
+                {{ form.csrf_token }}
+                {% include "form_errors.html" %}
+                <div class="mb-3">
+                    <label for="itemId">상품 번호</label>
+                    <input type="text" class="form-control" name="itemId" id="itemId"
+                           value="{{ form.itemId.data or '' }}">
+                </div>
+                <div class="mb-3">
+                    <label for="quantity">수량</label>
+                    <input type="number" class="form-control" name="quantity" id="quantity"
+                           value="{{ form.quantity.data or '' }}">
+                </div>
+                <input type="hidden" name="dailyFlightId" value="{{ dailyFlightId }}">
+                <input type="hidden" name="userId" value="{{ userId }}">
+                <button type="submit" class="view-button">총 결제 금액 조회</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

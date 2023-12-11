@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .details-container {
+            width: 60%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .detail-item {
+            margin-bottom: 10px;
+        }
+        .detail-item label {
+            font-weight: bold;
+        }
+        .button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 5px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .view-button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="details-container">
+        <h2>결제 후 예상 잔여 마일리지:</h2>
+            <div class="detail-item">
+                <label>{{ userName }} 고객님 잔여 마일리지:</label>
+                <span>{{ curr_milage }}</span>
+            </div>
+    </div>
+    <div class="details-container">
+        <h2>특이사항/고객 편의 정보 입력</h2>
+        <p> 다음 선택 사항 중, 해당되는 사항이 있다면 선택 해주세요</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>정보 번호</th>
+                    <th>이름</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for special_info in special_info_list %}
+                <tr>
+                    <td>{{ special_info.SpecialInfoId }}</td>
+                    <td>{{ special_info.SpecialInfoName }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="detail-item">
+            <form action="{{ url_for('purchase.special_info_result') }}" method="post">
+                {{ form.csrf_token }}
+                {% include "form_errors.html" %}
+                <div class="mb-3">
+                    <label for="specialInfoId">특이사항 선택(번호 입력)</label>
+                    <input type="text" class="form-control" name="specialInfoId" id="specialInfoId"
+                           value="{{ form.specialInfoId.data or '' }}">
+                    <input type="hidden" name="seat" value="{{ seat }}">
+                    <input type="hidden" name="userId" value="{{ userId }}">
+                    <input type="hidden" name="userName" value="{{ userName }}">
+                    <input type="hidden" name="dailyFlightId" value="{{ dailyFlightId }}">
+                    <input type="hidden" name="payment" value="{{ payment }}">
+                    <input type="hidden" name="userId" value="{{ userId }}">
+                    <button type="submit" class="view-button">전송</button>
+                </div>
+            </form>
+            <form action="{{ url_for('purchase.duty_free') }}" method="post">
+                <input type="hidden" name="dailyFlightId" value="{{ dailyFlightId }}">
+                <input type="hidden" name="userId" value="{{ userId }}">
+                <button type="submit" class="view-button">다음 페이지(건너뛰기)</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

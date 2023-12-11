@@ -1,0 +1,91 @@
+<!-- templates/flight_results.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>검색 결과</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .view-button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        .disabled-button {
+            background-color: #cccccc; /* Gray */
+            cursor: not-allowed;
+        }
+                .details-container {
+            width: 60%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .detail-item {
+            margin-bottom: 10px;
+        }
+        .detail-item label {
+            font-weight: bold;
+        }
+        .button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 5px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .view-button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="details-container">
+        <h1>특이•편의 정보 입려 결과</h1>
+        <p>고객님, 입력하신 특이•편의 정보가 정상적으로 입력되었습니다.
+            아래 버튼을 누르시면, 면세점 이용 정보 페이지로 이동합니다.</p>
+        <div class="detail-item">
+            <form action="{{url_for('purchase.duty_free')}}" method="post">
+                <input type="hidden" name="userId" value="{{ userId }}">
+                <input type="hidden" name="dailyFlightId" value="{{ dailyFlightId }}">
+                <button type="submit" class="view-button">다음 페이지</button>
+            </form>
+        </div>
+
+    </div>
+</body>
+</html>

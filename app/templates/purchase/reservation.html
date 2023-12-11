@@ -31,15 +31,23 @@
         .button:hover {
             background-color: #45a049;
         }
+        .view-button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div class="details-container">
         <h2>항공편 세부 정보</h2>
-        <div class="detail-item">
-            <label>날짜:</label>
-            <span>{{ userId }}</span>
-        </div>
         <div class="detail-item">
             <label>날짜:</label>
             <span>{{ date }}</span>
@@ -57,7 +65,7 @@
             <span>{{ flightNumber }}</span>
         </div>
         <div class="detail-item">
-            <label>항공기 ID:</label>
+            <label>항공기 ID:</lab
             <span>{{ aircraftId }}</span>
         </div>
     </div>
@@ -80,14 +88,27 @@
             <label> 이코노미 남은 자리: </label>
             <span>{{ num_economy }}</span>
             {% if num_economy > 0 %}
-                <a href="#" class="button">예약하기</a>
+                <form action="{{ url_for('purchase.payment') }}" method="post">
+                    <input type="hidden" name="seat" value="Economy">
+                    <input type="hidden" name="userId" value="{{ userId }}">
+                    <input type="hidden" name="userName" value="{{ userName }}">
+                    <input type="hidden" name="dailyFlightId" value="{{ dailyFlightId }}">
+                    <button type="submit" class="view-button">예약</button>
+                </form>
             {% endif %}
+
         </div>
         <div class="detail-item">
             <label> 비즈니스 남은 자리: </label>
             <span>{{ num_business }}</span>
             {% if num_business > 0 %}
-                <a href="#" class="button">예약하기</a>
+                <form action="{{ url_for('purchase.payment') }}" method="post">
+                    <input type="hidden" name="seat" value="Business">
+                    <input type="hidden" name="userId" value="{{ userId }}">
+                    <input type="hidden" name="userName" value="{{ userName }}">
+                    <input type="hidden" name="dailyFlightId" value="{{ dailyFlightId }}">
+                    <button type="submit" class="view-button">예약</button>
+                </form>
             {% endif %}
         </div>
     </div>
