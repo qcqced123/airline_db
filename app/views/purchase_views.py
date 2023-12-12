@@ -1,15 +1,28 @@
 from datetime import datetime
+from sqlalchemy.orm import sessionmaker
 from flask import Blueprint, url_for, render_template, flash
 from flask import request, current_app, jsonify, session
 from sqlalchemy import Table, insert, update, delete, select, and_, text
 from werkzeug.utils import redirect
 from app.forms import DutyFreeFrom, SpecialInfoFrom
 
-increment = 40  # id 자동으로 증가 못하나
 bp = Blueprint('purchase', __name__, url_prefix='/')
 
 
-def get_current_time():
+def generate_reservation_id(database: sessionmaker, reservation: Table) -> str:
+    """ Generate ReservationId """
+    query = select(reservation.c.ReservationId).order_by(reservation.c.ReservationId.desc()).limit(1)
+    last_reservation_id = database.execute(query).scalar()
+
+    if last_reservation_id:
+        reservation_id_number = int(last_reservation_id[2:]) + 1
+        reservation_id = 'RV' + str(reservation_id_number).zfill(4)
+        return reservation_id
+    else:
+        return 'RV0001'
+
+
+def get_current_time() -> str:
     """ Get current time """
     now = datetime.now()
     return now.strftime("%Y-%m-%d %H:%M:%S")
@@ -153,11 +166,8 @@ def payment():
     This view have 2 Parts:
         1. record reservation table
         2. Select mileage payment or not
-            - 현금 결제 선택 시, 마일리지 적립()
-        => 적립 및 감소는 모두 다음 상세 페이지로 넘어가면서 적용되도록 만들자
     """
     from app import engine, metadata_obj, database
-    global increment
     seat = request.form['seat']
     userId = request.form['userId']
     userName = request.form['userName']
@@ -165,8 +175,9 @@ def payment():
 
     # 1. recording reservation table
     reservationTable = Table("Reservation", metadata_obj, autoload_with=engine)
+    reservationId = generate_reservation_id(database, reservationTable)
     reservation = insert(reservationTable).values(
-        ReservationId=f"RV00{increment}",
+        ReservationId=reservationId,
         DailyFlightId=dailyFlightId,
         UserId=userId,
         AirlineCode='OZ',
@@ -174,7 +185,6 @@ def payment():
     )
     database.execute(reservation)
     database.commit()
-    increment += 1
 
     # 2. Select mileage payment or not
     userTable = Table("User", metadata_obj, autoload_with=engine)

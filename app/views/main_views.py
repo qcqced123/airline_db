@@ -19,3 +19,9 @@ def index():
 def personal():
     """ Concrete view for personal information page """
     return render_template('./user/menu.html')
+
+
+@bp.route('/management')
+def staff():
+    """ Concrete view for personal information page """
+    return render_template('staff/management.html')

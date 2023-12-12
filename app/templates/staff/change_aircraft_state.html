@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>검색 결과</title>
-        <style>
+    <style>
         table {
             width: 100%;
             border-collapse: collapse;
@@ -74,45 +74,33 @@
     </style>
 </head>
 <body>
-    <h1>검색 결과</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>날짜</th>
-                <th>상태</th>
-                <th>일일 항공편 ID</th>
-                <th>비행 번호</th>
-                <th>항공기 ID</th>
-                <th>조회</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for flight in flights %}
-            <tr>
-                <td>{{ flight.Date }}</td>
-                <td>{{ flight.State }}</td>
-                <td>{{ flight.DailyFlightId }}</td>
-                <td>{{ flight.FlightNumber }}</td>
-                <td>{{ flight.AircraftId }}</td>
-
-                <td>
-                    {% if flight.State == 'Cancelled' or flight.State == 'Delayed' %}
-                        <button class="view-button disabled-button" disabled>조회</button>
-                    {% else %}
-                        <!-- 각 행의 데이터를 함께 전송하는 폼 -->
-                        <form action="{{ url_for('purchase.reservation') }}" method="post">
-                            <input type="hidden" name="date" value="{{ flight.Date }}">
-                            <input type="hidden" name="state" value="{{ flight.State }}">
-                            <input type="hidden" name="dailyFlightId" value="{{ flight.DailyFlightId }}">
-                            <input type="hidden" name="flightNumber" value="{{ flight.FlightNumber }}">
-                            <input type="hidden" name="aircraftId" value="{{ flight.AircraftId }}">
-                            <button type="submit" class="view-button">조회</button>
-                        </form>
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="details-container">
+        <h1 class="my-3 border-bottom pb-2">비행 취소•대체 항공기 추가</h1>
+        <form method="post">
+            {{ form.csrf_token }}
+            {% include "form_errors.html" %}
+            <div class="container">
+                <label for="start_date">적용 시작 날짜</label>
+                <input type="date" class="form-control" name="start_date" id="start_date"
+                       value="{{ form.start_date.data or '' }}">
+            </div>
+            <div class="container">
+                <label for="end_date">적용 종료 날짜</label>
+                <input type="date" class="form-control" name="end_date" id="end_date"
+                       value="{{ form.end_date.data or '' }}">
+            </div>
+            <div class="container">
+                <label for="prev_aircraftId">취소할 항공기 번호(AircraftID, default A000)</label>
+                <input type="text" class="form-control" name="prev_aircraftId" id="prev_aircraftId"
+                       value="{{ form.prev_aircraftId.data or '' }}">
+            </div>
+            <div class="container">
+                <label for="new_aircraftId">대체 항공기 번호(AircraftID, default A000)</label>
+                <input type="text" class="form-control" name="new_aircraftId" id="new_aircraftId"
+                       value="{{ form.new_aircraftId.data or '' }}">
+            </div>
+            <button type="submit" class="view-button">변경</button>
+        </form>
+    </div>
 </body>
 </html>

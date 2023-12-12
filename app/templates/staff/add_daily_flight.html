@@ -1,0 +1,121 @@
+<!-- templates/flight_results.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>검색 결과</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .view-button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        .disabled-button {
+            background-color: #cccccc; /* Gray */
+            cursor: not-allowed;
+        }
+                .details-container {
+            width: 60%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .detail-item {
+            margin-bottom: 10px;
+        }
+        .detail-item label {
+            font-weight: bold;
+        }
+        .button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 5px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .view-button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="details-container">
+        <h1 class="my-3 border-bottom pb-2">추가•수정 항공편 스케줄 설정</h1>
+        <form action="{{url_for('staff.apply_add_flight')}}" method="post">
+            {{ form.csrf_token }}
+            {% include "form_errors.html" %}
+            <div class="container">
+                <label for="start_date">시작 날짜</label>
+                <input type="date" class="form-control" name="start_date" id="start_date"
+                       value="{{ form.start_date.data or '' }}">
+            </div>
+            <div class="container">
+                <label for="end_date">종료 날짜</label>
+                <input type="date" class="form-control" name="end_date" id="end_date"
+                       value="{{ form.end_date.data or '' }}">
+            </div>
+            <div class="container">
+                <label for="flightNumber">비행 번호(FlightNumber, default OZ000)</label>
+                <input type="text" class="form-control" name="flightNumber" id="flightNumber"
+                       value="{{ form.flightNumber.data or '' }}">
+            </div>
+            <div class="container">
+                <label for="aircraftId">항공기 번호(AircraftID, default A000)</label>
+                <input type="text" class="form-control" name="aircraftId" id="aircraftId"
+                       value="{{ form.aircraftId.data or '' }}">
+            </div>
+            <div class="container">
+                <label for="Departure">출발지 코드</label>
+                <input type="text" class="form-control" name="Departure" id="Departure"
+                       value="{{ form.Departure.data or '' }}">
+            </div>
+            <div class="container">
+                <label for="Arrival">도착지 코드(AircraftID, default A000)</label>
+                <input type="text" class="form-control" name="Arrival" id="Arrival"
+                       value="{{ form.Arrival.data or '' }}">
+            </div>
+            <div class="container">
+                <label for="DepartureTime">출발 시간(AircraftID, default A000)</label>
+                <input type="time" class="form-control" name="DepartureTime" id="DepartureTime"
+                       value="{{ form.DepartureTime.data or '' }}">
+            </div>
+            <button type="submit" class="view-button">추가</button>
+        </form>
+    </div>
+</body>
+</html>
